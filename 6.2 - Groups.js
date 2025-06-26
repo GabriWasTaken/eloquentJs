@@ -17,23 +17,37 @@ over it.
 */
 
 class Group {
+  #values = []
   constructor() {
-
   }
   
-  has() {
-
+  has(value) {
+    return this.#values.includes(value)
   }
 
-  add() {
-
+  add(value) {
+    if (!this.has(value)) this.#values.push(value);
   }
 
-  delete() {
-
+  delete(value) {
+    this.#values = this.#values.filter((v) => v !== value);
   }
 
-  static from() {
-
+  static from(array) {
+    const group = new Group();
+    array.forEach((value) => {
+      group.add(value);
+    })
+    return group;
   }
 }
+
+let group = Group.from([10, 20]);
+console.log(group.has(10));
+// → true
+console.log(group.has(30));
+// → false
+group.add(10);
+group.delete(10);
+console.log(group.has(10));
+// → false
